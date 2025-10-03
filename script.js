@@ -16,11 +16,11 @@ console.log("My age is:", myAge);
 console.log("Am I learning JavaScript?", isLearning);
 
 // Different Data Types
-let studentName = "Sarah";  //string
-let score = 95.5;   // Numbers(can be decimal)
-let isGraduated = false; // Boolean
-let favouriteColors = ["blue", "green", "red"]; //Array
-let student = {name: "Alex", grade: "A"};  //Object
+let studentName = "Aditya";  //string
+let score = 80;   // Numbers(can be decimal)
+let isGraduated = true; // Boolean
+let favouriteColors = ["blue", "green", "red", "yellow"]; //Array
+let student = {name: "Aditya", grade: "B"};  //Object
 
 console.log("=== Data Types Demo ===");
 console.log("Name:", studentName, "Type:", typeof studentName);
@@ -28,3 +28,21 @@ console.log("Score:", score, "Type:", typeof score);
 console.log("Graduated:", isGraduated, "Type:", typeof isGraduated);
 console.log("Favourite Colors:", favouriteColors, "Type:", typeof favouriteColors);
 console.log("Student Object:", student, "Type:", typeof student);
+
+//Functions - reusable blocks of code
+function greetUser(name) {
+    return "Hello, " + name + "! Welcome to JavaScript!"
+}
+
+function addNumbers(num1, num2) {
+    return num1+num2;
+}
+
+function getRandomNumber() {
+    return Math.floor(Math.random() * 100) + 1;
+}
+
+console.log("=== Functions Demo ===");
+console.log(greetUser("Aditya"));
+console.log("5 + 3 = ", addNumbers(5, 3));
+console.log("Random number:", getRandomNumber());

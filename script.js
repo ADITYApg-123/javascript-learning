@@ -46,3 +46,22 @@ console.log("=== Functions Demo ===");
 console.log(greetUser("Aditya"));
 console.log("5 + 3 = ", addNumbers(5, 3));
 console.log("Random number:", getRandomNumber());
+
+
+// Arrays - lists of data
+let fruits = ["apple", "banana", "cherry"];
+let numbers = [10,25, 3, 47, 12];
+let mixed = ["Hello", 42, true, "world"];
+
+console.log("=== Arrays Demo ===");
+console.log("Fruits:", fruits);
+console.log("fruits:", fruits[0]);
+console.log("first fruit length:", fruits.length);
+
+//adding and removing items
+fruits.push("mango");
+console.log("After adding mango:", fruits);
+
+let removedFruit = fruits.pop(); // removes from end
+console.log("removed fruit:", removedFruit);
+console.log("Final fruits:", fruits);

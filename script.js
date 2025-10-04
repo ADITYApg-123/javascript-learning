@@ -65,3 +65,48 @@ console.log("After adding mango:", fruits);
 let removedFruit = fruits.pop(); // removes from end
 console.log("removed fruit:", removedFruit);
 console.log("Final fruits:", fruits);
+
+
+// Dy 2:  Dom manipulation - Making webages interractive!
+console.log("=== Day 2: Dom Manipulation ===");
+
+//Wait for pages to load completely
+document.addEventListener('DOMContentLoaded', function() {
+
+    // get refernces to HTML elements
+    const titleElement = document.getElementById('main-title');
+    const descritionElement = document.getElementById('description');
+    const outputElement = document.getElementById('output');
+
+    // get references to buttons
+    const changeTitleBtn = document.getElementById('change-title-btn');
+    const changeColorBtn = document.getElementById('change-color-btn');
+    const addTextBtn = document.getElementById('add-text-btn');
+
+    console.log("Dom elements found!", titleElement, changeTitleBtn);
+
+    // Make buttons interactive
+    changeTitleBtn.addEventListener('click', function() {
+        titleElement.textContent = 'JavaScript is Awesome!';
+        console.log("Title changed!");
+    });
+
+    changeColorBtn.addEventListener('click', function() {
+        titleElement.style.backgroundColor = getRandomColor();
+        console.log("Background color changed!");
+    });
+
+    addTextBtn.addEventListener(
+        'click', 
+        function() {
+            outputElement.innerHTML += "<p>You clicked at: " + new Date().toLocaleTimeString() + "</p>";
+            console.log("Text added!");
+        }
+    );
+});
+
+// Helper function to generate random colors
+function getRandomColor() {
+    const colors = ['#ffcccb', '#add8e6', '#90ee90', '#ffd700', '#dda0dd', '#f0e68c'];
+    return colors[Math.floor(Math.random() * colors.length)];
+}   

@@ -103,6 +103,35 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Text added!");
         }
     );
+
+
+// New interactive input features
+const userInput = document.getElementById('user-input');
+const greetBtn = document.getElementById('greet-btn');
+const countBtn = document.getElementById('count-btn');
+
+greetBtn.addEventListener(
+    'click', 
+    function() {
+        const userName = userInput.value; // get what user typed
+        if (userName.trim() === '') {
+            outputElement.innerHTML += "<p style = 'color:red;'>Please enter your name first!</p>"; // validation
+        }
+        else {
+            outputElement.innerHTML += "<p style = 'color: green;'>Hello, " + userName + "! Nice to meet you! </p>";
+        }
+    }
+);
+
+countBtn.addEventListener(
+    'click',
+    function() {
+        const text = userInput.value;
+        const letterCount = text.length;
+        outputElement.innerHTML += "<p style='color: blue;'>'" + text + "' has " + letterCount + " characters.</p>";
+    }
+);
+
 });
 
 // Helper function to generate random colors

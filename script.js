@@ -132,6 +132,37 @@ countBtn.addEventListener(
     }
 );
 
+    // Advanced Event Handling
+    const liveInput = document.getElementById('live-input');
+    const liveOutput = document.getElementById('live-output');
+    const hoverBtn = document.getElementById('hover-btn');
+    const mouseTracker = document.getElementById('mouse-tracker');
+
+    // Live typing event (keyup = after each key press)
+    liveInput.addEventListener('keyup', function() {
+        const text = liveInput.value;
+        liveOutput.textContent = "You typed: '" + text + "' (" + text.length + " characters)";
+    });
+
+    //Mouse hover events
+    hoverBtn.addEventListener('mouseenter', function() {
+        hoverBtn.textContent = "You're hovering!";
+        hoverBtn.style.backgroundColor = '#ff6b6b';
+    });
+
+    hoverBtn.addEventListener('mouseleave', function() {
+        hoverBtn.textContent = "Hover over me!";
+        hoverBtn.style.backgroundColor = '#007acc';
+    });
+
+    // Mouse movement tracking
+    mouseTracker.addEventListener('mousemove', function(event) {
+        const rect = mouseTracker.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        mouseTracker.innerHTML = "Mouse position: X=" + Math.round(x) + ", Y=" + Math.round(y);
+    });
+
 });
 
 // Helper function to generate random colors

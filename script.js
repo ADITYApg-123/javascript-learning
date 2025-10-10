@@ -163,6 +163,92 @@ countBtn.addEventListener(
         mouseTracker.innerHTML = "Mouse position: X=" + Math.round(x) + ", Y=" + Math.round(y);
     });
 
+    // Day 3: Form Validation
+    const contactForm = document.getElementById('contact-form');
+    const userName = document.getElementById('user-name');
+    const userEmail = document.getElementById('user-email');
+    const userMessage = document.getElementById('user-message');
+
+    //Erro message elements
+    const nameError = document.getElementById('name-error');
+    const emailError = document.getElementById('email-error');
+    const messageError = document.getElementById('message-error');
+    const formSuccess = document.getElementById('form-success');
+
+    // Validation functions
+    function validateName(name) {
+        if(name.trim().length < 2) {
+            return "Name must be at least 2 charactters long";
+        }
+        if(!/^[a-zA-Z\s]+$/.test(name)) {
+            return "Name can only contain letters and spaces";
+        }
+        return ""; // No error
+    }  
+
+    function validateEmail(email) {
+        if(email.trim() === "") {
+            return "Email is required";
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(!emailRegex.test(email)) {
+            return "Please enter a vlaid email address";
+        }
+        return ""; // No error
+    }
+
+    function validateMessage(message) {
+        if(message.trim().length < 10) {
+            return "Message must be at least 10 characters long";
+        }
+        return ""; // No error
+    }
+
+    //Real-time validation (as user types)
+    userName.addEventListener('blur', function() {
+        nameError.textContent = validateName(userName.value);
+    });
+
+    userEmail.addEventListener('blur', function() {
+        emailError.textContent = validateEmail(userEmail.value);
+    });
+
+    userMessage.addEventListener('blur', function() {
+        messageError.textContent = validateMessage(userMessage.value);
+    });
+
+    // Form submission handling
+    contactForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Stop fprm from atually submitting
+
+        // Clear previous success message
+        formSuccess.style.display = 'none';
+
+        // Validate all fields
+        const nameErr = validateName(userName.value);
+        const emailErr = validateEmail(userEmail.value);
+        const messageErr = validateMessage(userMessage.value);
+
+        // Display all errors
+        nameError.textContent = nameErr;
+        emailError.textContent = emailErr;
+        messageError.textContent = messageErr;
+
+        // if no error, show success
+        if(!nameErr && !emailErr && !messageErr) {
+            formSuccess.style.display = 'block';
+            outputElement.innerHTML += "<div style = 'background: #d4edda; padding:10px; margin:10px 0; border-radius:5px;'>" +
+            "<strong>Form Data Submitted :</strong><br>" +
+            "Name: " + userName.value + "<br>" +
+            "Email: " + userEmail.value + "<br>" +
+            "Message: " + userMessage.value +
+            "</div>";
+
+            // clear form 
+            contactForm.reset();
+        }
+    });
+
 });
 
 // Helper function to generate random colors

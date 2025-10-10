@@ -30,7 +30,37 @@
         <div id="mouse-tracker" style="border: 2px solid #ccc; padding: 20px; margin: 10px 0;">
             Move your mouse in this box!
         </div>
-        
+
+        <hr>
+        <h2>Day 3: Contact Form with Validation</h2>
+        <form id="contact-form">
+            <div style="margin: 10px 0;">
+                <label for="user-name">Name:</label>    
+                <br>
+                <input type="text" id="user-name" placeholder="Enter your name" style="width: 300px; padding: 5px;">
+                <span id="name-error" style="color: red; font-size: 12px;"></span>
+            </div>
+
+            <div style="margin: 10px 0;">
+                <label for="user-email">Email:</label>    
+                <br>
+                <input type="email" id="user-email" placeholder="Enter your email" style="width: 300px; padding: 5px;">
+                <span id="email-error" style="color: red; font-size: 12px;"></span>
+            </div>
+
+            <div style="margin: 10px 0;">
+                <label for="user-message">Message:</label>    
+                <br>
+                <textarea id="user-message" placeholder="Enter your message" style="width: 300px; height: 80px; padding: 5px;"></textarea>
+                <span id="message-error" style="color: red; font-size: 12px;"></span>
+            </div>
+
+            <button type="submit" style="background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px;">Submit Form</button>
+        </form>
+
+        <div id="form-success" style="color: green; margin: 10px 0; display: none;">
+            Form submitted successfully!
+        </div>
         
         <div id="output">
             Ready for some DOM magic!

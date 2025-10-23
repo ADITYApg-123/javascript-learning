@@ -169,7 +169,7 @@ countBtn.addEventListener(
     const userEmail = document.getElementById('user-email');
     const userMessage = document.getElementById('user-message');
 
-    //Erro message elements
+    //Error message elements
     const nameError = document.getElementById('name-error');
     const emailError = document.getElementById('email-error');
     const messageError = document.getElementById('message-error');
@@ -192,7 +192,7 @@ countBtn.addEventListener(
         }
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if(!emailRegex.test(email)) {
-            return "Please enter a vlaid email address";
+            return "Please enter a valid email address";
         }
         return ""; // No error
     }
@@ -219,7 +219,7 @@ countBtn.addEventListener(
 
     // Form submission handling
     contactForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Stop fprm from atually submitting
+        event.preventDefault(); // Stop form from atually submitting
 
         // Clear previous success message
         formSuccess.style.display = 'none';
@@ -246,6 +246,115 @@ countBtn.addEventListener(
 
             // clear form 
             contactForm.reset();
+        }
+    });
+
+    // Day 4: Async Javascript & API calls
+    const fetchJokeBtn = document.getElementById('fetch-joke-btn');
+    const fetchFactBtn = document.getElementById('fetch-fact-btn');
+    const fetchQuoteBtn = document.getElementById('fetch-quote-btn');
+    const apiOutput = document.getElementById('api-output');
+    const loading = document.getElementById('loading');
+
+    // Helper function to show loading
+    function showLoading() {
+        loading.style.display = 'block';
+        apiOutput.innerHTML = '<p style="color: #6c757d; font-style: italic;">Loading...</p>';
+    }
+
+    // Helper function to hide loading
+    function hideLoading() {
+        loading.style.display = 'none';
+    }
+
+    //Fetch a random joke
+    fetchJokeBtn.addEventListener('click', async function() {
+        showLoading();
+
+        try {
+            const response = await fetch('https://official-joke-api.appspot.com/random_joke');
+            const joke = await response.json();
+
+            hideLoading();
+            apiOutput.innerHTML = `
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; border-left: 4px solid #2196f3;">
+                    <h4 style="color: #1976d2; margin: 0 0 10px 0;">😂 Random Joke</h4>
+                    <p style="margin: 5px 0;"><strong>Setup:</strong> ${joke.setup}</p>
+                    <p style="margin: 5px 0;"><strong>Punchline:</strong> ${joke.punchline}</p>
+                    <small style="color: #666;">Source: Official Joke API</small>
+                </div>
+            `;
+            console.log('Joke fetched:', joke);
+        }
+        catch (error) {
+            hideLoading();
+            apiOutput.innerHTML = `
+                <div style="background: #ffebee; padding: 15px; border-radius: 8px; border-left: 4px solid #f44336;">
+                    <p style="color: #c62828; margin: 0;">❌ Error fetching joke: ${error.message}</p>
+                </div>
+            `;
+            console.log('Error:', error);
+        }
+    });
+
+    //Fetch a Cat fact
+    fetchFactBtn.addEventListener('click', async function() {
+        showLoading();
+
+        try {
+            const response = await fetch('https://catfact.ninja/fact');
+            const data = await response.json();
+
+            hideLoading();
+            apiOutput.innerHTML = `
+                <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; border-left: 4px solid #4caf50;">
+                    <h4 style="color: #388e3c; margin: 0 0 10px 0;">🐱 Cat Fact</h4>
+                    <p style="margin: 5px 0; font-size: 16px;">${data.fact}</p>
+                    <small style="color: #666;">Length: ${data.length} characters | Source: Cat Facts API</small>
+                </div>
+            `;
+            console.log('Cat fact fetched:', data);
+
+        } catch (error) {
+            hideLoading();
+            apiOutput.innerHTML = `
+                <div style="background: #ffebee; padding: 15px; border-radius: 8px; border-left: 4px solid #f44336;">
+                    <p style="color: #c62828; margin: 0;">❌ Error fetching cat fact: ${error.message}</p>
+                </div>
+            `;
+            console.error('Error:', error);
+        }
+    });
+
+    //Fetch an inspirational quote
+    fetchQuoteBtn.addEventListener('click', async function() {
+        showLoading();
+
+        try {
+            const response = await fetch('https://api.quotable.io/random');
+            const quote = await response.json();
+
+            hideLoading();
+            apiOutput.innerHTML = `
+                <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; border-left: 4px solid #9c27b0;">
+                    <h4 style="color: #7b1fa2; margin: 0 0 10px 0;">✨ Inspirational Quote</h4>
+                    <blockquote style="margin: 10px 0; font-size: 18px; font-style: italic; color: #333;">
+                        "${quote.content}"
+                    </blockquote>
+                    <p style="margin: 5px 0; text-align: right; color: #666;">— ${quote.author}</p>
+                    <small style="color: #666;">Tags: ${quote.tags.join(', ')} | Source: Quotable API</small>
+                </div>
+            `;
+            console.log('Quote fetched:', quote);
+
+        } catch (error) {
+            hideLoading();
+            apiOutput.innerHTML = `
+                <div style="background: #ffebee; padding: 15px; border-radius: 8px; border-left: 4px solid #f44336;">
+                    <p style="color: #c62828; margin: 0;">❌ Error fetching quote: ${error.message}</p>
+                </div>
+            `;
+            console.error('Error:', error);
         }
     });
 

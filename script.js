@@ -249,6 +249,36 @@ countBtn.addEventListener(
         }
     });
 
+    console.log("=== Promise Demo ===");
+
+    function simulateAsyncTask(taskName, delay) {
+        return new Promise(function(resolve, reject) {
+            if(delay < 0) {
+                reject("Delay must be non-negative for " + taskName);
+                return;
+            }
+            setTimeout(function() {
+                resolve(taskName + " Finished after " + delay + "ms");
+            }, delay);
+        });
+    }
+
+    simulateAsyncTask("Step 1", 1000)
+        .then(function(result1) {
+            console.log(result1);
+            return simulateAsyncTask("Step 2", 800);
+        })
+        .then(function(result2) {
+            console.log(result2);
+            return simulateAsyncTask("Step 3", 500);
+        })
+        .then(function(result3) {
+            console.log(result3);
+        })
+        .catch(function(error) {
+            console.error("Oops:", error);
+        });
+
     // Day 4: Async Javascript & API calls
     const fetchJokeBtn = document.getElementById('fetch-joke-btn');
     const fetchFactBtn = document.getElementById('fetch-fact-btn');
@@ -357,6 +387,67 @@ countBtn.addEventListener(
             console.error('Error:', error);
         }
     });
+
+    // Fetch everything in parallelwith Promise.all
+    const fetchAllBtn = document.getElementById('fetch-all-btn');
+
+    fetchAllBtn.addEventListener('click', async function() {
+        showLoading();
+
+        try {
+            const [jokeResponse, factResponse, quoteResponse] = await Promise.all([
+                fetch('https://official-joke-api.appspot.com/random_joke'),
+                fetch('https://catfact.ninja/fact'),
+                fetch('https://api.quotable.io/random')
+            ]);
+
+            if(!jokeResponse.ok || !factResponse.ok || !quoteResponse.ok) {
+                throw new Error('One of the APIs returned a bad status');
+            }
+
+            const [joke, fact, quote] = await Promise.all([
+                jokeResponse.json(),
+                factResponse.json(),
+                quoteResponse.json()
+            ]);
+
+            hideLoading();
+
+            apiOutput.innerHTML = `
+                <div style="display: grid; gap: 16px;">
+                    <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; border-left: 4px solid #2196f3;">
+                        <h4 style="color: #1976d2; margin: 0 0 10px 0;">😂 Random Joke</h4>
+                        <p style="margin: 5px 0;"><strong>Setup:</strong> ${joke.setup}</p>
+                        <p style="margin: 5px 0;"><strong>Punchline:</strong> ${joke.punchline}</p>
+                    </div>
+
+                    <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; border-left: 4px solid #4caf50;">
+                        <h4 style="color: #388e3c; margin: 0 0 10px 0;">🐱 Cat Fact</h4>
+                        <p style="margin: 5px 0; font-size: 16px;">${fact.fact}</p>
+                    </div>
+
+                    <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; border-left: 4px solid #9c27b0;">
+                        <h4 style="color: #7b1fa2; margin: 0 0 10px 0;">✨ Inspirational Quote</h4>
+                        <blockquote style="margin: 10px 0; font-size: 18px; font-style: italic; color: #333;">
+                            "${quote.content}"
+                        </blockquote>
+                        <p style="margin: 5px 0; text-align: right; color: #666;">— ${quote.author}</p>
+                    </div>
+                </div>
+            `;
+
+            console.log('All three fetched:', { joke, fact, quote });
+
+        } catch (error) {
+            hideLoading();
+            apiOutput.innerhtml = `
+                <div style="background: #ffebee; padding: 15px; border-radius: 8px; border-left: 4px solid #f44336;">
+                    <p style="color: #c62828; margin: 0;">❌ Could not fetch all data: ${error.message}</p>
+                </div>
+            `;
+            console.error('Promise.all error:', error);
+        }
+    })
 
 });
 
